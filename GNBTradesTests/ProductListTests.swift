@@ -1,6 +1,6 @@
 //
-//  GNBTradesTests.swift
-//  GNBTradesTests
+//  ProductListTests.swift
+//  ProductListTests
 //
 //  Created by Ivan Aibar Romero on 03/11/2020.
 //
@@ -17,11 +17,10 @@ final class ProductListTests: XCTestCase {
     override func setUp() {
         super.setUp()
         disposeBag = DisposeBag()
-        
     }
     
     func testLoadingTransactionsFromAPIClient() {
-        let viewModel = ProductListViewModel(apiClient: MockedSuccessApi())
+        let viewModel = ProductListViewModel(apiClient: MockedTransactionsSuccessApi())
         let scheduler = TestScheduler(initialClock: 0)
         let reloadObserver = scheduler.createObserver(TableReload.self)
         viewModel.reloadFields.bind(to: reloadObserver).disposed(by: disposeBag)
@@ -37,7 +36,7 @@ final class ProductListTests: XCTestCase {
 
 }
 
-final class MockedSuccessApi: ApiClient {
+final class MockedTransactionsSuccessApi: ApiClient {
     func getData(of request: RequestBuilder, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         
         let transaction = Transaction(sku: "ABCD", amount: "99.9", currency: "EUR")
